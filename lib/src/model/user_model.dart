@@ -10,6 +10,14 @@ sealed class UserModel {
     required this.email,
     this.avatar,
   });
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return switch (map['profile']) {
+      'ADM' => UserModelADM.fromMap(map),
+      'EMPLOYEE' =>UserModelEmployee.fromMap(map),
+      _ => throw ArgumentError('Retorno de login inválido'),
+    };
+  }
 }
 
 class UserModelADM extends UserModel {

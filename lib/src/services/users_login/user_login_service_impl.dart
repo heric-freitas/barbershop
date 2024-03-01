@@ -5,7 +5,7 @@ import 'package:dw_barbershop/src/core/fp/nil.dart';
 import 'package:dw_barbershop/src/repositories/user/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/exceptions/service_exceptions.dart';
+import '../../core/exceptions/service_exception.dart';
 import './user_login_service.dart';
 
 class UserLoginServiceImpl implements UserLoginService {
@@ -14,7 +14,7 @@ class UserLoginServiceImpl implements UserLoginService {
   UserLoginServiceImpl({required this.userRepository});
 
   @override
-  Future<Either<ServiceExceptions, Nil>> login(
+  Future<Either<ServiceException, Nil>> login(
       String email, String password) async {
     final result = await userRepository.login(email, password);
     return result.when(
@@ -24,7 +24,7 @@ class UserLoginServiceImpl implements UserLoginService {
         return Success(nil);
       },
       failure: (exception) =>
-          Failure(ServiceExceptions(message: exception.message)),
+          Failure(ServiceException(message: exception.message)),
     );
   }
 }
